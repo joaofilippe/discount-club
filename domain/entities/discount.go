@@ -9,8 +9,11 @@ import (
 type Discount struct {
 	ID           uuid.UUID
 	RestaurantID uuid.UUID
-	Percentage int
-	StartDate time.Time
-	EndDate time.Time
-	Description string
+	UserID       uuid.UUID
+	Code         string
+	Percentage   int
+	StartDate    time.Time
+	EndDate      time.Time
+	Times        int
+	Description  string
 }
