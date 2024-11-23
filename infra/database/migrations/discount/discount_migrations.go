@@ -6,9 +6,9 @@ import (
 
 
 // CreateDiscountTable creates the discount table in the database.
-func CreateDiscountTable(conn *database.Connection) error {
+func CreateTable(conn *database.Connection) error {
 	tx := conn.Get().MustBegin()
-	_, err := tx.Exec(CreateTable)
+	_, err := tx.Exec(createTableQuery)
 	if err != nil {
 		tx.Rollback()
 		return err

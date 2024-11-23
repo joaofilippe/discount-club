@@ -1,6 +1,6 @@
 package discountmigrations
 
-const CreateTable = `
+const createTableQuery = `
 	CREATE TABLE IF NOT EXISTS discount (
 		id UUID PRIMARY KEY,
 		restaurant_id UUID NOT NULL,
@@ -18,6 +18,6 @@ const CreateTable = `
 	);
 `
 
-const DropTable = `
+const dropTableQuery = `
 	DROP TABLE IF EXISTS discount;
 `
