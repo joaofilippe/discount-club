@@ -1,3 +1,5 @@
 package discountmigrations
 
-func 
+func CreateDiscountTable() {
+	// Create discount table
+}
