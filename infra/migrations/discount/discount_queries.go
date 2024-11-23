@@ -1,4 +1,4 @@
-package migrationsdiscount
+package discountmigrations
 
 const CreateTable = `
 	CREATE TABLE IF NOT EXISTS discount (
