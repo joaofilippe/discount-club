@@ -17,3 +17,7 @@ const CreateTable = `
 		active BOOLEAN NOT NULL
 	);
 `
+
+const DropTable = `
+	DROP TABLE IF EXISTS discount;
+`
