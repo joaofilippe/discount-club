@@ -16,6 +16,10 @@ type Discount struct {
 	endDate      time.Time
 	times        int
 	description  string
+	createdAt    time.Time
+	updatedAt    time.Time
+	deletedAt    time.Time
+	active       bool
 }
 
 func NewDiscount(
@@ -35,6 +39,7 @@ func NewDiscount(
 		endDate:      endDate,
 		times:        times,
 		description:  description,
+		active:       true,
 	}
 }
 
@@ -72,6 +77,22 @@ func (d *Discount) Times() int {
 
 func (d *Discount) Description() string {
 	return d.description
+}
+
+func (d *Discount) CreatedAt() time.Time {
+	return d.createdAt
+}
+
+func (d *Discount) UpdatedAt() time.Time {
+	return d.updatedAt
+}
+
+func (d *Discount) DeletedAt() time.Time {
+	return d.deletedAt
+}
+
+func (d *Discount) Active() bool {
+	return d.active
 }
 
 func (d *Discount) SetID(id uuid.UUID) {

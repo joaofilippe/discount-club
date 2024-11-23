@@ -14,6 +14,6 @@ const CreateTable = `
 		created_at TIMESTAMP NOT NULL,
 		updated_at TIMESTAMP NOT NULL,
 		deleted_at TIMESTAMP
-		valid BOOLEAN NOT NULL
+		active BOOLEAN NOT NULL
 	);
 `
