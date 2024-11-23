@@ -4,7 +4,15 @@ import (
 	"github.com/joaofilippe/discount-club/infra/database"
 )
 
-func CreateDiscountTable(conn *database.DBConnection) error {
-	_, err := conn.DBConnection.Exec(CreateTable)
-	return err
+
+// CreateDiscountTable creates the discount table in the database.
+func CreateDiscountTable(conn *database.Connection) error {
+	tx := conn.Get().MustBegin()
+	_, err := tx.Exec(CreateTable)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	return tx.Commit()
 }
