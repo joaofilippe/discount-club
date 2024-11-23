@@ -20,6 +20,7 @@ func NewCreateUseCase(discountRepo irepositories.Discount) *CreateUseCase {
 
 func (uc *CreateUseCase) Execute(discount *entities.Discount) error {
 	
+	
 	return nil
 }
 
@@ -32,6 +33,9 @@ func generateCode() string {
 	r := rand.New(pcg)
 
 	b := make([]byte, 6)
+	for i := range b {
+		b[i] = charset[r.IntN(len(charset))]
+	}
 
 	return ""
 }
