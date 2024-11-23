@@ -4,6 +4,7 @@ import (
 	"math/rand/v2"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/joaofilippe/discount-club/domain/entities"
 	"github.com/joaofilippe/discount-club/domain/irepositories"
 )
@@ -19,16 +20,16 @@ func NewCreateUseCase(discountRepo irepositories.Discount) *CreateUseCase {
 }
 
 func (uc *CreateUseCase) Execute(discount *entities.Discount) error {
-	
-	
-	return nil
+	discount.SetID(uuid.New())
+	discount.SetCode(generateCode())
+
+	return uc.DiscountRepo.Save(discount)
+
 }
-
-
 
 func generateCode() string {
 	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-	
+
 	pcg := rand.NewPCG(uint64(time.Now().Unix()), uint64(time.Now().Second()))
 	r := rand.New(pcg)
 
