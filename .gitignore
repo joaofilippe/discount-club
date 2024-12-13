@@ -1,3 +1,4 @@
 /codealike.json
 
 *.env
+config/db.yaml
