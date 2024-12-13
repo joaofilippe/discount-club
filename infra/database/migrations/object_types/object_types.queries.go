@@ -1,6 +1,6 @@
 package objecttypesmigrations
 
-const createObjectTypeENUM = `
+const createUserTypeENUM = `
 	CREATE TYPE user_type AS ENUM (
 		'client', 
 		'restaurant_admin', 

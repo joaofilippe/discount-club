@@ -7,13 +7,14 @@ import (
 )
 
 type Logger struct {
-	Logger  *slog.Logger
+	Logger *slog.Logger
 }
+
 // NewLogger returns a new logger
 func NewLogger() *Logger {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	return &Logger{
-		Logger:  logger,
+		Logger: logger,
 	}
 }
 

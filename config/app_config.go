@@ -50,7 +50,6 @@ func NewApp(log *logger.Logger) *App {
 	})
 
 	return instance
-
 }
 
 func Instance() *App {
@@ -62,7 +61,7 @@ func getDsn(log *logger.Logger, configPath string) string {
 		return os.Getenv("COMPOSE_DSN")
 	}
 
-	return getDsnFromYaml(log,configPath)
+	return getDsnFromYaml(log, configPath)
 
 }
 

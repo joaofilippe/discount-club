@@ -4,7 +4,6 @@ import (
 	"github.com/joaofilippe/discount-club/infra/database"
 )
 
-
 // CreateTable creates the discount table in the database.
 func CreateTable(conn *database.Connection) error {
 	tx := conn.Get().MustBegin()
@@ -16,7 +15,6 @@ func CreateTable(conn *database.Connection) error {
 
 	return tx.Commit()
 }
-
 
 // DropTable drops the discount table from the database.
 func DropTable(conn *database.Connection) error {

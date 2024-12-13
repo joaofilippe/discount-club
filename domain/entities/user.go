@@ -20,10 +20,10 @@ type User struct {
 
 func NewUser(email, password string, userType usertype.UserType) *User {
 	return &User{
-		email:     email,
-		password:  password,
-		userType:  userType,
-		active:    true,
+		email:    email,
+		password: password,
+		userType: userType,
+		active:   true,
 	}
 }
 
