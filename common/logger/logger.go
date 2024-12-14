@@ -10,8 +10,8 @@ type Logger struct {
 	Logger *slog.Logger
 }
 
-// NewLogger returns a new logger
-func NewLogger() *Logger {
+// New returns a new logger
+func New() *Logger {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 	return &Logger{
 		Logger: logger,

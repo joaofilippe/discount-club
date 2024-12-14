@@ -33,8 +33,8 @@ func main() {
 		panic(err)
 	}
 
-	logger := logger.NewLogger()
+	logger := logger.New()
 	app := appconfig.Instance(logger)
-	
+
 	fmt.Println(app)
 }
