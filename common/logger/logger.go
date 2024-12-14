@@ -6,6 +6,7 @@ import (
 	"runtime"
 )
 
+// Logger is a custom logger that wraps slog.Logger
 type Logger struct {
 	Logger *slog.Logger
 }
