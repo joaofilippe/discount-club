@@ -13,11 +13,14 @@ import (
 )
 
 var (
-	instance *App
-	once     sync.Once
+	app  *App
+	once sync.Once
 )
 
+// App holds the application configuration.
 type App struct {
+	Environment string
+	Logger     *logger.Logger
 	ConfigPath string
 	SecretKey  string
 	Port       string
@@ -33,49 +36,56 @@ type dbConfig struct {
 	Dsn      string
 }
 
-func NewApp(log *logger.Logger) *App {
-	once.Do(func() {
-		var app App
+// Instance returns the singleton instance of the App configuration.
+func Instance(logger *logger.Logger) *App {
+	if app == nil {
+		return newInstance(logger)
+	}
 
+	return app
+}
+
+func newInstance(logger *logger.Logger) *App {
+	once.Do(func() {
+		app = &App{}
+		app.Environment = os.Getenv("ENV")
+		app.Logger = logger
 		app.ConfigPath = "./config"
+
 		err := godotenv.Load(app.ConfigPath + "/.env")
 		if err != nil {
-			log.Fatalf(errors.New("can't load .env file :( "))
+			app.Logger.Fatalf(errors.New("can't load .env file :( "))
 		}
 
 		app.SecretKey = os.Getenv("SECRET_KEY")
 		app.Port = os.Getenv("PORT")
 
-		instance = &app
+		setDsn()
 	})
 
-	return instance
+	return app
 }
 
-func Instance() *App {
-	return instance
-}
-
-func getDsn(log *logger.Logger, configPath string) string {
+func setDsn() {
 	if os.Getenv("ENV") == "docker" {
-		return os.Getenv("COMPOSE_DSN")
+		app.Dsn = os.Getenv("COMPOSE_DSN")
 	}
 
-	return getDsnFromYaml(log, configPath)
+	app.Dsn = setDsnFromYaml()
 
 }
 
-func getDsnFromYaml(log *logger.Logger, configPath string) string {
-	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/db.yaml", configPath))
+func setDsnFromYaml() string {
+	yamlFile, err := os.ReadFile(fmt.Sprintf("%s/db.yaml", app.ConfigPath))
 	if err != nil {
-		log.Fatalf(fmt.Errorf("can't load db.yaml file"))
+		app.Logger.Fatalf(fmt.Errorf("can't load db.yaml file"))
 	}
 
 	dbConfig := &dbConfig{}
 
 	err = yaml.Unmarshal(yamlFile, dbConfig)
 	if err != nil {
-		log.Fatalf(fmt.Errorf("can't unmarshal db.yaml file"))
+		app.Logger.Fatalf(fmt.Errorf("can't unmarshal db.yaml file"))
 	}
 
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",

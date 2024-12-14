@@ -18,12 +18,14 @@ func NewLogger() *Logger {
 	}
 }
 
+// Errorf logs an error message with the line number where it occurred
 func (l *Logger) Errorf(err error) {
 	_, _, line, _ := runtime.Caller(1)
 
 	l.Logger.Error(err.Error(), "line=", line)
 }
 
+// Fatalf logs an error message with the line number where it occurred and then panics
 func (l *Logger) Fatalf(err error) {
 	_, _, line, _ := runtime.Caller(1)
 
@@ -31,6 +33,7 @@ func (l *Logger) Fatalf(err error) {
 	panic(err)
 }
 
+// Infof logs an informational message with the line number and file where it occurred
 func (l *Logger) Infof(message string) {
 	_, file, line, _ := runtime.Caller(1)
 

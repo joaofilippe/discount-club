@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/joaofilippe/discount-club/common/logger"
+	appconfig "github.com/joaofilippe/discount-club/config"
 	"github.com/spf13/cobra"
 )
 
@@ -31,5 +33,8 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println("enviroment: ", os.Getenv("ENV"))
+	logger := logger.NewLogger()
+	app := appconfig.Instance(logger)
+	
+	fmt.Println(app)
 }
