@@ -38,5 +38,5 @@ func generateCode() string {
 		b[i] = charset[r.IntN(len(charset))]
 	}
 
-	return ""
+	return string(b)
 }

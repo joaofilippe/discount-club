@@ -13,7 +13,7 @@ const createTableQuery = `
 		description TEXT NOT NULL,
 		created_at TIMESTAMP NOT NULL,
 		updated_at TIMESTAMP NOT NULL,
-		deleted_at TIMESTAMP
+		deleted_at TIMESTAMP,
 		active BOOLEAN NOT NULL
 	);
 `

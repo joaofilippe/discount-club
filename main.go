@@ -9,6 +9,7 @@ import (
 	"github.com/joaofilippe/discount-club/common/logger"
 	appconfig "github.com/joaofilippe/discount-club/config"
 	"github.com/joaofilippe/discount-club/infra/database"
+	"github.com/joaofilippe/discount-club/infra/database/migrations"
 )
 
 // GetEnvFlag returns a cobra command for environment flag
@@ -43,5 +44,10 @@ func main() {
 	if err := conn.Get().Ping(); err != nil {
 		panic(fmt.Errorf("can't ping database: %w", err))
 
+	}
+
+	if err := migrations.Up(conn); err != nil {
+		migrations.Down(conn)
+		panic(fmt.Errorf("can't run migrations: %w", err))
 	}
 }

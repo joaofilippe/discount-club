@@ -9,7 +9,7 @@ func CreateTable(conn *database.Connection) error {
 	tx := conn.Get().MustBegin()
 	_, err := tx.Exec(createTableQuery)
 	if err != nil {
-		tx.Rollback()
+		_ = tx.Rollback()
 		return err
 	}
 
