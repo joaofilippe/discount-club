@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/spf13/cobra"
+
 	"github.com/joaofilippe/discount-club/common/logger"
 	appconfig "github.com/joaofilippe/discount-club/config"
-	"github.com/spf13/cobra"
+	"github.com/joaofilippe/discount-club/infra/database"
 )
 
 // GetEnvFlag returns a cobra command for environment flag
@@ -36,5 +38,10 @@ func main() {
 	logger := logger.New()
 	app := appconfig.Instance(logger)
 
-	fmt.Println(app)
+	conn := database.New(logger, app)
+
+	if err := conn.Get().Ping(); err != nil {
+		panic(fmt.Errorf("can't ping database: %w", err))
+
+	}
 }

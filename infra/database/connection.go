@@ -18,9 +18,9 @@ type Connection struct {
 }
 
 // New creates a new database connection.
-func New(log *logger.Logger, appConfig *appconfig.App) {
+func New(log *logger.Logger, appConfig *appconfig.App) *Connection{
 	if connection != nil {
-		return
+		return connection
 	}
 
 	db, err := sqlx.Open("postgres", appConfig.Dsn)
@@ -31,6 +31,8 @@ func New(log *logger.Logger, appConfig *appconfig.App) {
 	connection = &Connection{
 		db,
 	}
+
+	return connection
 }
 
 // Get returns the database connection.
