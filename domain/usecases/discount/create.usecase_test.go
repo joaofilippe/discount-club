@@ -80,11 +80,13 @@ var _ = Describe("Create.Usecase", func() {
 		Context("whith a valid discount", func() {
 			BeforeEach(func() {
 				discountRepo.On("Save", discount).Return(nil)
-				err = discountUseCase.Execute(discount)
+				discount, err = discountUseCase.Execute(discount)
 			})
 
 			It("should return no error", func() {
 				Expect(err).To(BeNil())
+				Expect(discount).NotTo(BeNil())
+				Expect(discount.Code).NotTo(BeNil())
 			})
 		})
 	})
