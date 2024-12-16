@@ -20,11 +20,11 @@ var (
 // App holds the application configuration.
 type App struct {
 	Environment string
-	Logger     *logger.Logger
-	ConfigPath string
-	SecretKey  string
-	Port       string
-	Dsn        string
+	Logger      *logger.Logger
+	ConfigPath  string
+	SecretKey   string
+	Port        string
+	Dsn         string
 }
 
 type dbConfig struct {

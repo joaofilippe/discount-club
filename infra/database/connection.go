@@ -18,7 +18,7 @@ type Connection struct {
 }
 
 // New creates a new database connection.
-func New(log *logger.Logger, appConfig *appconfig.App) *Connection{
+func New(log *logger.Logger, appConfig *appconfig.App) *Connection {
 	if connection != nil {
 		return connection
 	}
