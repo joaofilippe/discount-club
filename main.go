@@ -13,22 +13,18 @@ import (
 )
 
 func main() {
+	logger := logger.New()
+
 	rootCmd := &cobra.Command{}
 	rootCmd.AddCommand(commands.CreateEnvCommand())
 
 	if err := rootCmd.Execute(); err != nil {
-		panic(err)
+		logger.Fatalf(err)
 	}
 
-	logger := logger.New()
 	app := appconfig.Instance(logger)
 
 	conn := database.New(logger, app)
-
-	if err := conn.Get().Ping(); err != nil {
-		logger.Errorf(fmt.Errorf("can't ping database: %w", err))
-	}
-
 	if err := migrations.Up(conn); err != nil {
 		_ = migrations.Down(conn)
 		logger.Fatalf(fmt.Errorf("can't run migrations: %w", err))
