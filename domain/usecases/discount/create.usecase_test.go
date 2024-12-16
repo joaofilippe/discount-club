@@ -28,7 +28,7 @@ var _ = Describe("Create.Usecase", func() {
 	var (
 		discountRepo    *DiscountRepoMock
 		discountUseCase *discountusecases.CreateUseCase
-		err error
+		err             error
 	)
 
 	Describe("New CreateUseCase", func() {
