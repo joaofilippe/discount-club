@@ -26,10 +26,18 @@ func NewCreateUseCase(discountRepo irepositories.Discount) (*CreateUseCase, erro
 }
 
 func (uc *CreateUseCase) Execute(discount *entities.Discount) (*entities.Discount, error) {
+	if discount == nil {
+		return nil, errors.New(errormessages.ErrNilDiscount)
+	}
+
+	if discount.Code() != "" {
+		return nil, errors.New(errormessages.ErrCodeProvidedOnCreate)
+	}
+
 	discount.SetID(uuid.New())
 	discount.SetCode(generateCode())
 
-	return discount, uc.DiscountRepo.Save(discount)	
+	return discount, uc.DiscountRepo.Save(discount)
 }
 
 func generateCode() string {
