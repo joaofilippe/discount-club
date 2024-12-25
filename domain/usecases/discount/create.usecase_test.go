@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/stretchr/testify/mock"
 
-	errormessages "github.com/joaofilippe/discount-club/common/errors/messages"
+	discounterrors "github.com/joaofilippe/discount-club/common/myerrors/discount"
 	"github.com/joaofilippe/discount-club/domain/entities"
 	discountusecases "github.com/joaofilippe/discount-club/domain/usecases/discount"
 )
@@ -20,7 +20,7 @@ type DiscountRepoMock struct {
 
 func (d *DiscountRepoMock) Save(discount *entities.Discount) error {
 	if discount == nil {
-		return errors.New(errormessages.ErrNilDiscount)
+		return discounterrors.ErrNilDiscountRepo
 	}
 
 	return nil

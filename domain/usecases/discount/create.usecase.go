@@ -1,12 +1,11 @@
 package discountusecases
 
 import (
-	"errors"
 	"math/rand/v2"
 	"time"
 
 	"github.com/google/uuid"
-	errormessages "github.com/joaofilippe/discount-club/common/errors/messages"
+	discounterrors "github.com/joaofilippe/discount-club/common/myerrors/discount"
 	"github.com/joaofilippe/discount-club/domain/entities"
 	"github.com/joaofilippe/discount-club/domain/irepositories"
 )
@@ -17,7 +16,7 @@ type CreateUseCase struct {
 
 func NewCreateUseCase(discountRepo irepositories.Discount) (*CreateUseCase, error) {
 	if discountRepo == nil {
-		return nil, errors.New(errormessages.ErrNilDiscountRepo)
+		return nil, discounterrors.ErrNilDiscountRepo
 	}
 
 	return &CreateUseCase{
@@ -27,11 +26,11 @@ func NewCreateUseCase(discountRepo irepositories.Discount) (*CreateUseCase, erro
 
 func (uc *CreateUseCase) Execute(discount *entities.Discount) (*entities.Discount, error) {
 	if discount == nil {
-		return nil, errors.New(errormessages.ErrNilDiscount)
+		return nil, discounterrors.ErrNoDiscountProvided
 	}
 
 	if discount.Code() != "" {
-		return nil, errors.New(errormessages.ErrCodeProvidedOnCreate)
+		return nil, discounterrors.ErrCodeProvidedOnCreate
 	}
 
 	discount.SetID(uuid.New())
