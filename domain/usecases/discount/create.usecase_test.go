@@ -1,7 +1,6 @@
 package discountusecases_test
 
 import (
-	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -54,7 +53,7 @@ var _ = Describe("Create.Usecase", func() {
 
 			It("should return an error", func() {
 				Expect(discountUseCase).To(BeNil())
-				Expect(err).To(Equal(errors.New(errormessages.ErrNilDiscountRepo)))
+				Expect(err).To(Equal(discounterrors.ErrNilDiscountRepo))
 			})
 		})
 	})
