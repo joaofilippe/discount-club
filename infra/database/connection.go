@@ -4,7 +4,11 @@ import (
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq" //necessary to config
+
+	"github.com/golang-migrate/migrate/v4"
+	"github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+	_ "github.com/lib/pq"
 
 	"github.com/joaofilippe/discount-club/common/logger"
 	appconfig "github.com/joaofilippe/discount-club/config"
@@ -38,4 +42,22 @@ func New(log *logger.Logger, appConfig *appconfig.App) *Connection {
 // Get returns the database connection.
 func (c *Connection) Get() *sqlx.DB {
 	return c.db
+}
+
+func (c *Connection) RunMigrations() {
+	driver, err := postgres.WithInstance(c.db.DB, &postgres.Config{})
+	if err != nil {
+		println(err)
+		return
+	}
+	m, err := migrate.NewWithDatabaseInstance(
+		"file://infra/database/migrations",
+		"discount_club",
+		driver,
+	)
+	if err != nil {
+		println(err.Error())
+		return
+	}
+	_ = m.Up()
 }
