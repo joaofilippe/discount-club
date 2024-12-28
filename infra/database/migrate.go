@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 )
 
-func Up(c *sqlx.DB) error {
+func up(c *sqlx.DB) error {
 	migrate, err := buildMigrate(c)
 	if err != nil {
 		return err
@@ -17,7 +17,7 @@ func Up(c *sqlx.DB) error {
 	return migrate.Up()
 }
 
-func Down(c *sqlx.DB) error {
+func down(c *sqlx.DB) error {
 	migrate, err := buildMigrate(c)
 	if err != nil {
 		return err

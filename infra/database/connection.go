@@ -2,12 +2,10 @@ package database
 
 import (
 	"fmt"
+	"os"
 
-	"github.com/jmoiron/sqlx"
-
-	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 
 	"github.com/joaofilippe/discount-club/common/logger"
@@ -18,7 +16,8 @@ var connection *Connection
 
 // Connection holds the database connection details.
 type Connection struct {
-	db *sqlx.DB
+	app *appconfig.App
+	db  *sqlx.DB
 }
 
 // New creates a new database connection.
@@ -33,6 +32,7 @@ func New(log *logger.Logger, appConfig *appconfig.App) *Connection {
 	}
 
 	connection = &Connection{
+		appConfig,
 		db,
 	}
 
@@ -45,19 +45,13 @@ func (c *Connection) Get() *sqlx.DB {
 }
 
 func (c *Connection) RunMigrations() {
-	driver, err := postgres.WithInstance(c.db.DB, &postgres.Config{})
-	if err != nil {
-		println(err)
-		return
+	if os.Getenv("RESET_ENV") == "true" {
+		if err := down(c.db); err != nil {
+			c.app.Logger.Fatalf(err)
+		}
 	}
-	m, err := migrate.NewWithDatabaseInstance(
-		"file://infra/database/migrations",
-		"discount_club",
-		driver,
-	)
-	if err != nil {
-		println(err.Error())
-		return
+
+	if err := up(c.db); err != nil {
+		c.app.Logger.Fatalf(err)
 	}
-	_ = m.Up()
 }
