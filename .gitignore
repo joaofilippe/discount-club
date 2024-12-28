@@ -1,5 +1,7 @@
 /codealike.json
 
+*debug*
+
 *.env
 
 config/db.yaml

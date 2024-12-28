@@ -45,13 +45,13 @@ func (c *Connection) Get() *sqlx.DB {
 }
 
 func (c *Connection) RunMigrations() {
-	if os.Getenv("RESET_ENV") == "true" {
+	if os.Getenv("RESET_DB") == "true" {
 		if err := down(c.db); err != nil {
 			c.app.Logger.Fatalf(err)
 		}
 	}
 
-	if err := up(c.db); err != nil {
+	if err := up(c.db); err != nil && err.Error() != "no change" {
 		c.app.Logger.Fatalf(err)
 	}
 }

@@ -2,12 +2,27 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Package",
+            "name": "Run main.go",
             "type": "go",
             "request": "launch",
             "mode": "auto",
             "program": "${workspaceFolder}/main.go",
-            "args" : ["app","--env=dev", "--reset-db"]
+            "args": [
+                "app",
+                "--env=dev"
+            ]
+        },
+        {
+            "name": "Run with reset DB",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/main.go",
+            "args": [
+                "app",
+                "--env=dev",
+                "--reset-db"
+            ]
         }
     ]
 }
