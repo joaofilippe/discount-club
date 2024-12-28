@@ -23,10 +23,10 @@ func (s *ServerTestSuite) TestNewServer() {
 }
 
 func (suite *ServerTestSuite) TestSingletonServer() {
-    server1 := api.NewServer()
-    server2 := api.NewServer()
+	server1 := api.NewServer()
+	server2 := api.NewServer()
 
-    assert.Equal(suite.T(), server1, server2)
+	assert.Equal(suite.T(), server1, server2)
 }
 
 func TestServerTestSuite(t *testing.T) {

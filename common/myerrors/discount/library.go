@@ -1,6 +1,5 @@
 package discounterrors
 
-
 type errorDescription int
 
 const (
