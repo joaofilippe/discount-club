@@ -4,9 +4,9 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/joaofilippe/discount-club/commands"
-	"github.com/joaofilippe/discount-club/common/logger"
+	"github.com/joaofilippe/discount-club/app/common/logger"
 	appconfig "github.com/joaofilippe/discount-club/config"
-	"github.com/joaofilippe/discount-club/infra/database"
+	"github.com/joaofilippe/discount-club/app/infra/database"
 )
 
 func main() {

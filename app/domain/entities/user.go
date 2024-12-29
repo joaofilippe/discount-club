@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	usertype "github.com/joaofilippe/discount-club/domain/enums/user_type"
+	usertype "github.com/joaofilippe/discount-club/app/domain/enums/user_type"
 )
 
 type User struct {

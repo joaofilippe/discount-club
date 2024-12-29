@@ -8,9 +8,9 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/stretchr/testify/mock"
 
-	discounterrors "github.com/joaofilippe/discount-club/common/myerrors/discount"
-	"github.com/joaofilippe/discount-club/domain/entities"
-	discountusecases "github.com/joaofilippe/discount-club/domain/usecases/discount"
+	discounterrors "github.com/joaofilippe/discount-club/app/common/myerrors/discount"
+	"github.com/joaofilippe/discount-club/app/domain/entities"
+	discountusecases "github.com/joaofilippe/discount-club/app/domain/usecases/discount"
 )
 
 type DiscountRepoMock struct {

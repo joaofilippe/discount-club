@@ -3,7 +3,7 @@ package api_test
 import (
 	"testing"
 
-	"github.com/joaofilippe/discount-club/infra/api"
+	"github.com/joaofilippe/discount-club/app/infra/api"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )

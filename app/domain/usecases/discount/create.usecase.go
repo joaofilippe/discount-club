@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	discounterrors "github.com/joaofilippe/discount-club/common/myerrors/discount"
-	"github.com/joaofilippe/discount-club/domain/entities"
-	"github.com/joaofilippe/discount-club/domain/irepositories"
+	discounterrors "github.com/joaofilippe/discount-club/app/common/myerrors/discount"
+	"github.com/joaofilippe/discount-club/app/domain/entities"
+	"github.com/joaofilippe/discount-club/app/domain/irepositories"
 )
 
 type CreateUseCase struct {

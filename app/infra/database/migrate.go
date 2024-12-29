@@ -33,7 +33,7 @@ func buildMigrate(c *sqlx.DB) (*migrate.Migrate, error) {
 	}
 
 	return migrate.NewWithDatabaseInstance(
-		"file://infra/database/migrations",
+		"file://app/infra/database/migrations",
 		"discount_club",
 		driver,
 	)

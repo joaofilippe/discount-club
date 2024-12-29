@@ -8,7 +8,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 
-	"github.com/joaofilippe/discount-club/common/logger"
+	"github.com/joaofilippe/discount-club/app/common/logger"
 	appconfig "github.com/joaofilippe/discount-club/config"
 )
 

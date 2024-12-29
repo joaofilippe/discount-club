@@ -9,7 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v3"
 
-	"github.com/joaofilippe/discount-club/common/logger"
+	"github.com/joaofilippe/discount-club/app/common/logger"
 )
 
 var (
