@@ -1,12 +1,15 @@
 package main
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 
-	"github.com/joaofilippe/discount-club/commands"
 	"github.com/joaofilippe/discount-club/app/common/logger"
-	appconfig "github.com/joaofilippe/discount-club/config"
+	"github.com/joaofilippe/discount-club/app/infra/api"
 	"github.com/joaofilippe/discount-club/app/infra/database"
+	"github.com/joaofilippe/discount-club/commands"
+	appconfig "github.com/joaofilippe/discount-club/config"
 )
 
 func main() {
@@ -28,4 +31,9 @@ func main() {
 
 	conn.RunMigrations()
 
+	server := api.NewServer()
+
+	if err := server.Start(os.Getenv("PORT")); err != nil {
+		logger.Fatalf(err)
+	}
 }

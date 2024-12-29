@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/labstack/echo/v4"
@@ -33,7 +34,7 @@ func NewServer() *Server {
 }
 
 func (s *Server) Start(address string) error {
-	return s.server.Start(address)
+	return s.server.Start(fmt.Sprintf(":%s", address))
 }
 
 func (s *Server) buildRoutes() {
