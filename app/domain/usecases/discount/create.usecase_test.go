@@ -65,7 +65,7 @@ var _ = Describe("Create.Usecase", func() {
 
 			startTime, _ := time.Parse("2006-01-02", "2021-01-31")
 			endTime := startTime.Add(time.Hour * 24 * 31)
-			discount = entities.NewDiscount(
+			discount, _ = entities.NewDiscount(
 				uuid.New(),
 				uuid.New(),
 				10,

@@ -1,4 +1,4 @@
-package api
+package webserver
 
 import (
 	"fmt"
@@ -17,7 +17,7 @@ var (
 	once     sync.Once
 )
 
-func NewServer() *Server {
+func New() *Server {
 	once.Do(func() {
 		e := echo.New()
 		e.Use(middleware.Logger())

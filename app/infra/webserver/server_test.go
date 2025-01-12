@@ -1,20 +1,20 @@
-package api_test
+package webserver_test
 
 import (
 	"testing"
 
-	"github.com/joaofilippe/discount-club/app/infra/api"
+	"github.com/joaofilippe/discount-club/app/infra/webserver"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
 
 type ServerTestSuite struct {
 	suite.Suite
-	server *api.Server
+	server *webserver.Server
 }
 
 func (s *ServerTestSuite) SetupTest() {
-	s.server = api.NewServer()
+	s.server = webserver.New()
 }
 
 func (s *ServerTestSuite) TestNewServer() {
@@ -23,8 +23,8 @@ func (s *ServerTestSuite) TestNewServer() {
 }
 
 func (suite *ServerTestSuite) TestSingletonServer() {
-	server1 := api.NewServer()
-	server2 := api.NewServer()
+	server1 := webserver.New()
+	server2 := webserver.New()
 
 	assert.Equal(suite.T(), server1, server2)
 }

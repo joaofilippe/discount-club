@@ -6,15 +6,14 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/joaofilippe/discount-club/app/common/logger"
-	"github.com/joaofilippe/discount-club/app/infra/api"
 	"github.com/joaofilippe/discount-club/app/infra/database"
+	"github.com/joaofilippe/discount-club/app/infra/webserver"
 	"github.com/joaofilippe/discount-club/commands"
 	appconfig "github.com/joaofilippe/discount-club/config"
 )
 
 func main() {
 	logger := logger.New()
-	
 
 	rootCmd := &cobra.Command{}
 	rootCmd.AddCommand(commands.RunAppCommand())
@@ -32,7 +31,7 @@ func main() {
 
 	conn.RunMigrations()
 
-	server := api.NewServer()
+	server := webserver.New()
 
 	if err := server.Start(os.Getenv("PORT")); err != nil {
 		logger.Fatalf(err)
