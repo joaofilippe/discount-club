@@ -14,6 +14,7 @@ import (
 
 func main() {
 	logger := logger.New()
+	
 
 	rootCmd := &cobra.Command{}
 	rootCmd.AddCommand(commands.RunAppCommand())
