@@ -2,6 +2,6 @@ package iservices
 
 import "github.com/joaofilippe/discount-club/app/domain/entities"
 
-type IDiscountServices interface {
+type IDiscount interface {
 	Create(discount *entities.Discount) (*entities.Discount, error)
 }
