@@ -1,17 +1,18 @@
 package discountusecases
 
 import (
+	"fmt"
 	"math/rand/v2"
 	"time"
 
-	"github.com/google/uuid"
-	discounterrors "github.com/joaofilippe/discount-club/app/common/myerrors/discount"
+ 	discounterrors "github.com/joaofilippe/discount-club/app/common/myerrors/discount"
 	"github.com/joaofilippe/discount-club/app/domain/entities"
 	"github.com/joaofilippe/discount-club/app/domain/irepositories"
 )
 
 type CreateUseCase struct {
 	DiscountRepo irepositories.Discount
+	randSource   *rand.Rand
 }
 
 func NewCreateUseCase(discountRepo irepositories.Discount) (*CreateUseCase, error) {
@@ -19,31 +20,29 @@ func NewCreateUseCase(discountRepo irepositories.Discount) (*CreateUseCase, erro
 		return nil, discounterrors.ErrNilDiscountRepo
 	}
 
+	pcg := rand.NewPCG(uint64(time.Now().Unix()), uint64(time.Now().Second()))
+	r := rand.New(pcg)
+
 	return &CreateUseCase{
 		DiscountRepo: discountRepo,
+		randSource:   r,
 	}, nil
 }
 
-func (uc *CreateUseCase) Execute(discount *entities.Discount) (*entities.Discount, error) {
-	if discount == nil {
-		return nil, discounterrors.ErrNoDiscountProvided
+func (uc *CreateUseCase) Execute(request *entities.Discount) (*entities.Discount, error) {
+	if request == nil {
+		return entities.NewEmptyDiscount(), discounterrors.ErrNoDiscountProvided
 	}
 
-	if discount.Code() != "" {
-		return nil, discounterrors.ErrCodeProvidedOnCreate
+	if err := uc.validatedRequest(request); err != nil {
+		return entities.NewEmptyDiscount(), err
 	}
 
-	discount.SetID(uuid.New())
-	discount.SetCode(generateCode())
-
-	return discount, uc.DiscountRepo.Save(discount)
+	return request, uc.DiscountRepo.Save(request)
 }
 
-func generateCode() string {
+func (uc *CreateUseCase) generateCode(r *rand.Rand) string {
 	const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-
-	pcg := rand.NewPCG(uint64(time.Now().Unix()), uint64(time.Now().Second()))
-	r := rand.New(pcg)
 
 	b := make([]byte, 6)
 	for i := range b {
@@ -51,4 +50,29 @@ func generateCode() string {
 	}
 
 	return string(b)
+}
+
+func (uc *CreateUseCase) validatedRequest(discount *entities.Discount) error {
+	if discount.Code() != "" {
+		return discounterrors.ErrCodeProvidedOnCreate
+	}
+
+	if discount.Percentage() <= 0 || discount.Percentage() > 100 {
+		return fmt.Errorf("invalid percentage: %d", discount.Percentage())
+	}
+
+	if discount.Times() <= 0 {
+		return fmt.Errorf("invalid times: %d", discount.Times())
+	}
+
+	if discount.Description() == "" {
+		return fmt.Errorf("description is required")
+	}
+
+	return nil
+}
+
+func (uc *CreateUseCase) prepareDiscount(discount *entities.Discount) *entities.Discount {
+	code := uc.generateCode(uc.randSource)
+	return discount.CopyWithNewCode(&code)
 }

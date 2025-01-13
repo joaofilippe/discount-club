@@ -26,7 +26,7 @@ func (ws *WebServer) CreateDiscount(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, err)
 	}
 
-	validatedRequest, err := request.Validate()
+	validatedRequest, err := request.Parse()
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}

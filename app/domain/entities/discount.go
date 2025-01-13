@@ -1,7 +1,6 @@
 package entities
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -30,32 +29,8 @@ func NewDiscount(
 	times int,
 	description string,
 ) (*Discount, error) {
-	if percentage <= 0 || percentage > 100 {
-		return nil, fmt.Errorf("invalid percentage: %d", percentage)
-	}
-
-	if startDate.After(endDate) {
-		return nil, fmt.Errorf("start date is after end date")
-	}
-
-	if times <= 0 {
-		return nil, fmt.Errorf("invalid times: %d", times)
-	}
-
-	if description == "" {
-		return nil, fmt.Errorf("description is empty")
-	}
-
-	if restaurantID == uuid.Nil {
-		return nil, fmt.Errorf("invalid restaurant id")
-	}
-
-	if userID == uuid.Nil {
-		return nil, fmt.Errorf("invalid user id")
-	}
-
 	return &Discount{
-		id:           uuid.UUID{},
+		id:           uuid.New(),
 		restaurantID: restaurantID,
 		userID:       userID,
 		code:         "",
@@ -66,6 +41,78 @@ func NewDiscount(
 		description:  description,
 		active:       true,
 	}, nil
+}
+
+func (d *Discount) CopyWith(
+	restaurantID, userID *uuid.UUID,
+	code *string,
+	percentage *int,
+	startDate, endDate *time.Time,
+	times *int,
+	description *string,
+) *Discount {
+	newDiscount := &Discount{
+		id:           d.id,
+		restaurantID: d.restaurantID,
+		userID:       d.userID,
+		code:         d.code,
+		percentage:   d.percentage,
+		startDate:    d.startDate,
+		endDate:      d.endDate,
+		times:        d.times,
+		description:  d.description,
+		createdAt:    d.createdAt,
+		updatedAt:    time.Now(),
+		deletedAt:    d.deletedAt,
+		active:       d.active,
+	}
+
+	if restaurantID != nil {
+		newDiscount.restaurantID = *restaurantID
+	}
+
+	if userID != nil {
+		newDiscount.userID = *userID
+	}
+
+	if code != nil {
+		newDiscount.code = *code
+	}
+
+	if percentage != nil {
+		newDiscount.percentage = *percentage
+	}
+
+	if startDate != nil {
+		newDiscount.startDate = *startDate
+	}
+
+	if endDate != nil {
+		newDiscount.endDate = *endDate
+	}
+
+	if times != nil {
+		newDiscount.times = *times
+	}
+
+	if description != nil {
+		newDiscount.description = *description
+	}
+
+	return newDiscount
+}
+
+func (d *Discount) CopyWithNewCode(code *string) *Discount {
+	return d.CopyWith(
+		nil,
+		nil,
+		code,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+	)
 }
 
 func NewEmptyDiscount() *Discount {
@@ -122,14 +169,6 @@ func (d *Discount) DeletedAt() time.Time {
 
 func (d *Discount) Active() bool {
 	return d.active
-}
-
-func (d *Discount) SetID(id uuid.UUID) {
-	d.id = id
-}
-
-func (d *Discount) SetCode(code string) {
-	d.code = code
 }
 
 func (d *Discount) IsEmpty() bool {

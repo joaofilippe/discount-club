@@ -55,31 +55,8 @@ func (cr *CreateRequest) parseUUIDs() error {
 	return nil
 }
 
-func (cr *CreateRequest) check() error {
-	if cr.Percentage <= 0 || cr.Percentage > 100 {
-		return fmt.Errorf("invalid percentage: %d", cr.Percentage)
-	}
 
-	if cr.Times <= 0 {
-		return fmt.Errorf("invalid times: %d", cr.Times)
-	}
-
-	if cr.StartDateStr == "" {
-		return fmt.Errorf("start date is required")
-	}
-
-	if cr.EndDateStr == "" {
-		return fmt.Errorf("end date is required")
-	}
-
-	if cr.Description == "" {
-		return fmt.Errorf("description is required")
-	}
-
-	return cr.parseDates()
-}
-
-func (cr *CreateRequest) Validate() (*CreateRequest, error) {
+func (cr *CreateRequest) Parse() (*CreateRequest, error) {
 	newRequest := &CreateRequest{
 		RestaurantIDStr: cr.RestaurantIDStr,
 		RestaurantID:    cr.RestaurantID,
@@ -94,12 +71,7 @@ func (cr *CreateRequest) Validate() (*CreateRequest, error) {
 		Description:     cr.Description,
 	}
 
-	err := newRequest.check()
-	if err != nil {
-		return &CreateRequest{}, err
-	}
-
-	err = newRequest.parseDates()
+	err := newRequest.parseDates()
 	if err != nil {
 		return &CreateRequest{}, err
 	}
