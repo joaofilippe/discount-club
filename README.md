@@ -1,7 +1,6 @@
-# discount-eats (or similar)
+# discount-eats
 
 [![Development Status](https://img.shields.io/badge/status-in%20development-orange)](https://github.com/joaofilippe/discount-club)
-[![License](https://img.shields.io/github/license/joaofilippe/discount-club)](https://github.com/joaofilippe/discount-club/blob/main/LICENSE)
 
 An API to connect customers with discounts at restaurants, bars, and snack bars.
 
