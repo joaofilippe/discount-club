@@ -36,7 +36,7 @@ func New() *Server {
 }
 
 func (s *Server) Start(address string) error {
-	return s.server.Start(fmt.Sprintf(":%s", address))
+	return s.server.Start(fmt.Sprintf("localhost:%s", address))
 }
 
 func (s *Server) buildRoutes() {
