@@ -34,8 +34,10 @@ func main() {
 
 	conn.RunMigrations()
 
-	discountService, _ := services.NewDiscountService(&repositories.DiscountRepo{})
-	application := application.New(discountService)
+	discountService, _ := 
+		services.NewDiscountService(repositories.NewDiscountRepo(conn))
+	
+		application := application.New(discountService)
 
 	server := webserver.New(application)
 
