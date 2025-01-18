@@ -59,8 +59,8 @@ func (uc *CreateUseCase) prepareDiscount(discount *entities.Discount) *entities.
 		nil,
 		nil,
 		nil,
-		nil,
 		&now,
+		nil,
 		nil,
 		nil,
 	)
