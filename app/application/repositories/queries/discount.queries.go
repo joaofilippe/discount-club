@@ -26,8 +26,8 @@ const InsertDiscount = `
 		:times,
 		:description,
 		:created_at,
-		NULL,
-		NULL,
-		TRUE
+		:updated_at,
+		:deleted_at,
+		:active
 	);
 `

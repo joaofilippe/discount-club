@@ -50,6 +50,10 @@ func (d *Discount) CopyWith(
 	startDate, endDate *time.Time,
 	times *int,
 	description *string,
+	createdAt *time.Time,
+	updatedAt *time.Time,
+	deletedAt *time.Time,
+	active *bool,
 ) *Discount {
 	newDiscount := &Discount{
 		id:           d.id,
@@ -62,7 +66,7 @@ func (d *Discount) CopyWith(
 		times:        d.times,
 		description:  d.description,
 		createdAt:    d.createdAt,
-		updatedAt:    time.Now(),
+		updatedAt:    d.updatedAt,
 		deletedAt:    d.deletedAt,
 		active:       d.active,
 	}
@@ -99,6 +103,22 @@ func (d *Discount) CopyWith(
 		newDiscount.description = *description
 	}
 
+	if createdAt != nil {
+		newDiscount.createdAt = *createdAt
+	}
+
+	if updatedAt != nil {
+		newDiscount.updatedAt = *updatedAt
+	}
+
+	if deletedAt != nil {
+		newDiscount.deletedAt = *deletedAt
+	}
+
+	if active != nil {
+		newDiscount.active = *active
+	}
+
 	return newDiscount
 }
 
@@ -107,6 +127,10 @@ func (d *Discount) CopyWithNewCode(code *string) *Discount {
 		nil,
 		nil,
 		code,
+		nil,
+		nil,
+		nil,
+		nil,
 		nil,
 		nil,
 		nil,

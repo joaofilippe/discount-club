@@ -48,8 +48,23 @@ func (uc *CreateUseCase) Execute(request *entities.Discount) (*entities.Discount
 
 // prepareDiscount initializes a new discount with a generated code
 func (uc *CreateUseCase) prepareDiscount(discount *entities.Discount) *entities.Discount {
+	now := time.Now()
 	code := uc.generateCode(uc.randSource)
-	return discount.CopyWith(nil, nil, &code, nil, nil, nil, nil, nil)
+	return discount.CopyWith(
+		nil,
+		nil,
+		&code,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		nil,
+		&now,
+		nil,
+		nil,
+	)
+
 }
 
 // generateCode generates a random discount code
