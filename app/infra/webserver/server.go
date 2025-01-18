@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/joaofilippe/discount-club/app/api"
+	"github.com/joaofilippe/discount-club/app/application"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -41,5 +43,10 @@ func (s *Server) buildRoutes() {
 	s.server.GET("/", func(c echo.Context) error {
 		return c.String(200, "Hello, World!")
 	})
-	// Add other routes here
+
+	application := application.Application{}
+
+	api := api.New(&application, s.server)
+
+	api.BuildRoutes()
 }

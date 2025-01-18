@@ -24,5 +24,4 @@ func (a *Api) BuildRoutes() {
 
 	d := discountwebserver.New(a.application.DiscountService(), apiV1)
 	d.BuildRoutes()
-
 }
