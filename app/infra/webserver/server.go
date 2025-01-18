@@ -11,7 +11,8 @@ import (
 )
 
 type Server struct {
-	server *echo.Echo
+	server      *echo.Echo
+	application application.IApplication
 }
 
 var (
@@ -19,14 +20,17 @@ var (
 	once     sync.Once
 )
 
-func New() *Server {
+func New(
+	application application.IApplication,
+) *Server {
 	once.Do(func() {
 		e := echo.New()
 		e.Use(middleware.Logger())
 		e.Use(middleware.Recover())
 
 		instance = &Server{
-			server: e,
+			server:      e,
+			application: application,
 		}
 
 		instance.buildRoutes()
@@ -44,9 +48,7 @@ func (s *Server) buildRoutes() {
 		return c.String(200, "Hello, World!")
 	})
 
-	application := application.Application{}
-
-	api := api.New(&application, s.server)
+	api := api.New(s.application, s.server)
 
 	api.BuildRoutes()
 }

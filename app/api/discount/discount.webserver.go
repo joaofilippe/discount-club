@@ -3,6 +3,7 @@ package discountwebserver
 import (
 	"net/http"
 
+	commonapi "github.com/joaofilippe/discount-club/app/api/common"
 	"github.com/joaofilippe/discount-club/app/api/discount/requests"
 	"github.com/joaofilippe/discount-club/app/domain/entities"
 	"github.com/joaofilippe/discount-club/app/domain/iservices"
@@ -24,12 +25,12 @@ func New(discountService iservices.IDiscount, group *echo.Group) *WebServer {
 func (ws *WebServer) CreateDiscount(c echo.Context) error {
 	request := new(requests.CreateRequest)
 	if err := c.Bind(request); err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResponse(err))
 	}
 
 	validatedRequest, err := request.Parse()
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, err)
+		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResponse(err))
 	}
 
 	discount, err := entities.NewDiscount(

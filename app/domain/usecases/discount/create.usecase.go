@@ -7,21 +7,17 @@ import (
 
 	discounterrors "github.com/joaofilippe/discount-club/app/common/myerrors/discount"
 	"github.com/joaofilippe/discount-club/app/domain/entities"
+	"github.com/joaofilippe/discount-club/app/domain/irepositories"
 )
-
-// DiscountRepository defines the interface for discount repository
-type DiscountRepository interface {
-	Save(discount *entities.Discount) error
-}
 
 // CreateUseCase handles the creation of discounts
 type CreateUseCase struct {
-	DiscountRepo DiscountRepository
+	DiscountRepo irepositories.Discount
 	randSource   *rand.Rand
 }
 
 // NewCreateUseCase creates a new instance of CreateUseCase
-func NewCreateUseCase(discountRepo DiscountRepository) (*CreateUseCase, error) {
+func NewCreateUseCase(discountRepo irepositories.Discount) (*CreateUseCase, error) {
 	if discountRepo == nil {
 		return nil, discounterrors.ErrNilDiscountRepo
 	}

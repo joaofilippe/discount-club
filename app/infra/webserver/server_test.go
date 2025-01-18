@@ -3,8 +3,10 @@ package webserver_test
 import (
 	"testing"
 
+	"github.com/joaofilippe/discount-club/app/domain/iservices"
 	"github.com/joaofilippe/discount-club/app/infra/webserver"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -13,8 +15,17 @@ type ServerTestSuite struct {
 	server *webserver.Server
 }
 
+type IApplicationMock struct {
+	mock.Mock
+}
+
+func (a *IApplicationMock) DiscountService() iservices.IDiscount {
+	return nil
+}
+
 func (s *ServerTestSuite) SetupTest() {
-	s.server = webserver.New()
+	applicationMock := &IApplicationMock{}
+	s.server = webserver.New(applicationMock)
 }
 
 func (s *ServerTestSuite) TestNewServer() {
@@ -23,8 +34,10 @@ func (s *ServerTestSuite) TestNewServer() {
 }
 
 func (suite *ServerTestSuite) TestSingletonServer() {
-	server1 := webserver.New()
-	server2 := webserver.New()
+	applicationMock := &IApplicationMock{}
+
+	server1 := webserver.New(applicationMock)
+	server2 := webserver.New(applicationMock)
 
 	assert.Equal(suite.T(), server1, server2)
 }

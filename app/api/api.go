@@ -8,11 +8,11 @@ import (
 )
 
 type Api struct {
-	application *application.Application
+	application application.IApplication
 	server      *echo.Echo
 }
 
-func New(application *application.Application, server *echo.Echo) *Api {
+func New(application application.IApplication, server *echo.Echo) *Api {
 	return &Api{
 		application: application,
 		server:      server,

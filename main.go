@@ -5,6 +5,9 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/joaofilippe/discount-club/app/application"
+	"github.com/joaofilippe/discount-club/app/application/repositories"
+	"github.com/joaofilippe/discount-club/app/application/services"
 	"github.com/joaofilippe/discount-club/app/common/logger"
 	"github.com/joaofilippe/discount-club/app/infra/database"
 	"github.com/joaofilippe/discount-club/app/infra/webserver"
@@ -31,7 +34,10 @@ func main() {
 
 	conn.RunMigrations()
 
-	server := webserver.New()
+	discountService, _ := services.NewDiscountService(&repositories.DiscountRepo{})
+	application := application.New(discountService)
+
+	server := webserver.New(application)
 
 	if err := server.Start(os.Getenv("PORT")); err != nil {
 		logger.Fatalf(err)
