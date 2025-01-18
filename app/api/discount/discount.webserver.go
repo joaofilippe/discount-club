@@ -3,6 +3,7 @@ package discountwebserver
 import (
 	"net/http"
 
+	"github.com/joaofilippe/discount-club/app/api/discount/requests"
 	"github.com/joaofilippe/discount-club/app/domain/entities"
 	"github.com/joaofilippe/discount-club/app/domain/iservices"
 	"github.com/labstack/echo/v4"
@@ -21,7 +22,7 @@ func New(discountService iservices.IDiscount, group *echo.Group) *WebServer {
 }
 
 func (ws *WebServer) CreateDiscount(c echo.Context) error {
-	request := new(CreateRequest)
+	request := new(requests.CreateRequest)
 	if err := c.Bind(request); err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}

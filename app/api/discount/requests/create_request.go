@@ -1,4 +1,4 @@
-package discountwebserver
+package requests
 
 import (
 	"fmt"
