@@ -16,7 +16,7 @@ type CreateRequest struct {
 	StartDateStr    string `json:"start_date"`
 	StartDate       time.Time
 	EndDateStr      string `json:"end_date"`
-	EndDate         time.Time
+	EndDate         time.Time 
 	Times           int    `json:"times"`
 	Description     string `json:"description"`
 }

@@ -9,13 +9,13 @@ import (
 )
 
 type WebServer struct {
-	server          *echo.Echo
+	group           *echo.Group
 	discountService iservices.IDiscount
 }
 
-func New(discountService iservices.IDiscount, server *echo.Echo) *WebServer {
+func New(discountService iservices.IDiscount, group *echo.Group) *WebServer {
 	return &WebServer{
-		server:          server,
+		group:           group.Group("/discounts"),
 		discountService: discountService,
 	}
 }
