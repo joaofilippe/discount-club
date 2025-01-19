@@ -25,12 +25,12 @@ func New(discountService iservices.IDiscount, group *echo.Group) *WebServer {
 func (ws *WebServer) CreateDiscount(c echo.Context) error {
 	request := new(requests.CreateRequest)
 	if err := c.Bind(request); err != nil {
-		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResponse(err))
+		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResquest(err))
 	}
 
 	validatedRequest, err := request.Parse()
 	if err != nil {
-		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResponse(err))
+		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResquest(err))
 	}
 
 	discount, err := entities.NewDiscount(
@@ -51,5 +51,11 @@ func (ws *WebServer) CreateDiscount(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	return c.JSON(http.StatusCreated, result)
+	discountDTO := NewDiscountDTOFromEntity(*result)
+
+	return c.JSON(http.StatusCreated, commonapi.CommonResponse{
+		Code:    http.StatusCreated,
+		Message: "Discount created",
+		Data:    discountDTO,
+	})
 }

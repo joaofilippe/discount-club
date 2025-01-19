@@ -14,7 +14,7 @@ type CommonErrorResponse struct {
 	ErrorDetails any    `json:"error_details"`
 }
 
-func CommonInvalidResponse(err error) CommonErrorResponse {
+func CommonInvalidResquest(err error) CommonErrorResponse {
 	return CommonErrorResponse{
 		Code:         http.StatusBadRequest,
 		ErrorMessage: "Invalid request",
