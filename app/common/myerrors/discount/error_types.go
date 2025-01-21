@@ -12,6 +12,10 @@ var (
 	ErrNilDiscountRepo      = &UseCaseError{errDiscountNilRepo}
 	ErrCodeProvidedOnCreate = &UseCaseError{errDiscountCodeProvidedOnCreate}
 	ErrNoDiscountProvided   = &UseCaseError{errDiscountNoProvided}
+	ErrNoDiscountIDProvided = &UseCaseError{errNoDiscountIDProvided}
+	
+	ErrInvalidDiscountID = &UseCaseError{errInvalidDiscountID}
+	ErrDiscountNotFound     = &UseCaseError{errDiscountNotFound}
 )
 
 type RepositoryError struct {

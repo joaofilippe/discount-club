@@ -25,6 +25,10 @@ func (d *DiscountRepoMock) Save(discount *entities.Discount) error {
 	return nil
 }
 
+func (d *DiscountRepoMock) GetByID(id uuid.UUID) (*entities.Discount, error) {
+	return nil, nil
+}
+
 var _ = Describe("Create.Usecase", func() {
 	var (
 		discountRepo    *DiscountRepoMock
