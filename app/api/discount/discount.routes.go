@@ -13,4 +13,5 @@ func (ws *WebServer) BuildRoutes() {
 		})
 	})
 	ws.group.POST("", ws.CreateDiscount)
+	ws.group.GET("/:id", ws.GetDiscountByID)
 }

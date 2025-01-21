@@ -59,3 +59,20 @@ func (ws *WebServer) CreateDiscount(c echo.Context) error {
 		Data:    discountDTO,
 	})
 }
+
+func (ws *WebServer) GetDiscountByID(c echo.Context) error {
+	id := c.Param("id")
+
+	discount, err := ws.discountService.GetByID(id)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	discountDTO := NewDiscountDTOFromEntity(*discount)
+
+	return c.JSON(http.StatusOK, commonapi.CommonResponse{
+		Code:    http.StatusOK,
+		Message: "Discount found",
+		Data:    discountDTO,
+	})
+}

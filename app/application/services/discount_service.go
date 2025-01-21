@@ -7,7 +7,8 @@ import (
 )
 
 type DiscountService struct {
-	create *discountusecases.CreateUseCase
+	create  *discountusecases.CreateUseCase
+	getByID *discountusecases.GetByIDUseCase
 }
 
 func NewDiscountService(discountRepo irepositories.Discount) (*DiscountService, error) {
@@ -16,11 +17,21 @@ func NewDiscountService(discountRepo irepositories.Discount) (*DiscountService, 
 		return nil, err
 	}
 
+	getByID, err := discountusecases.NewGetByIDUseCase(discountRepo)
+	if err != nil {
+		return nil, err
+	}
+
 	return &DiscountService{
-		create: create,
+		create,
+		getByID,
 	}, nil
 }
 
 func (ds *DiscountService) Create(discount *entities.Discount) (*entities.Discount, error) {
 	return ds.create.Execute(discount)
+}
+
+func (ds *DiscountService) GetByID(id string) (*entities.Discount, error) {
+	return ds.getByID.Execute(id)
 }

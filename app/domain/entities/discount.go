@@ -71,6 +71,10 @@ func (d *Discount) CopyWith(
 		active:       d.active,
 	}
 
+	if id != nil {
+		newDiscount.id = *id
+	}
+
 	if restaurantID != nil {
 		newDiscount.restaurantID = *restaurantID
 	}
@@ -139,7 +143,6 @@ func (d *Discount) CopyWithNewCode(code *string) *Discount {
 		nil,
 	)
 }
-
 
 func (d *Discount) ID() uuid.UUID {
 	return d.id
