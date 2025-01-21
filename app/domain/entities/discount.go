@@ -44,7 +44,7 @@ func NewDiscount(
 }
 
 func (d *Discount) CopyWith(
-	restaurantID, userID *uuid.UUID,
+	id, restaurantID, userID *uuid.UUID,
 	code *string,
 	percentage *int,
 	startDate, endDate *time.Time,
@@ -126,6 +126,7 @@ func (d *Discount) CopyWithNewCode(code *string) *Discount {
 	return d.CopyWith(
 		nil,
 		nil,
+		nil,
 		code,
 		nil,
 		nil,
@@ -139,9 +140,6 @@ func (d *Discount) CopyWithNewCode(code *string) *Discount {
 	)
 }
 
-func NewEmptyDiscount() *Discount {
-	return &Discount{}
-}
 
 func (d *Discount) ID() uuid.UUID {
 	return d.id

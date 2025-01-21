@@ -31,3 +31,6 @@ const InsertDiscount = `
 		:active
 	);
 `
+const SelectDiscountByID = `
+	SELECT * FROM discounts WHERE id = $1;
+`

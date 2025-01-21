@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"github.com/google/uuid"
 	dbmodels "github.com/joaofilippe/discount-club/app/application/repositories/models"
 	"github.com/joaofilippe/discount-club/app/application/repositories/queries"
 	"github.com/joaofilippe/discount-club/app/domain/entities"
@@ -33,4 +34,16 @@ func (dr *DiscountRepo) Save(discount *entities.Discount) error {
 	}
 
 	return tx.Commit()
+}
+
+func (dr *DiscountRepo) GetByID(id uuid.UUID) (*entities.Discount, error) {
+	discountDB := new(dbmodels.Discount)
+	err := dr.conn.Get().Get(discountDB, queries.SelectDiscountByID, id)
+	if err != nil {
+		return nil, err
+	}
+
+	discount := discountDB.ToEntity()
+
+	return discount, nil
 }

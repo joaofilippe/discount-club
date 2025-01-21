@@ -34,11 +34,11 @@ func NewCreateUseCase(discountRepo irepositories.Discount) (*CreateUseCase, erro
 // Execute processes the discount creation request
 func (uc *CreateUseCase) Execute(request *entities.Discount) (*entities.Discount, error) {
 	if request == nil {
-		return entities.NewEmptyDiscount(), discounterrors.ErrNoDiscountProvided
+		return &entities.Discount{}, discounterrors.ErrNoDiscountProvided
 	}
 
 	if err := uc.validatedRequest(request); err != nil {
-		return entities.NewEmptyDiscount(), err
+		return &entities.Discount{}, err
 	}
 
 	initializedDiscount := uc.prepareDiscount(request)
@@ -51,6 +51,7 @@ func (uc *CreateUseCase) prepareDiscount(discount *entities.Discount) *entities.
 	now := time.Now()
 	code := uc.generateCode(uc.randSource)
 	return discount.CopyWith(
+		nil,
 		nil,
 		nil,
 		&code,

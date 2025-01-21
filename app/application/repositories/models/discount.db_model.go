@@ -38,3 +38,22 @@ func (d *Discount) FromEntity(entity *entities.Discount) {
 	d.DeletedAt = entity.DeletedAt()
 	d.Active = entity.Active()
 }
+
+func (d *Discount) ToEntity() *entities.Discount {
+	discount := entities.Discount{}
+	return discount.CopyWith(
+		&d.ID,
+		&d.RestaurantID,
+		&d.UserID,
+		&d.Code,
+		&d.Percentage,
+		&d.StartDate,
+		&d.EndDate,
+		&d.Times,
+		&d.Description,
+		&d.CreatedAt,
+		&d.UpdatedAt,
+		&d.DeletedAt,
+		&d.Active,
+	)
+}
