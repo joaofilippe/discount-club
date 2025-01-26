@@ -57,6 +57,10 @@ func (ws *WebServer) CreateDiscount(c echo.Context) error {
 		Code:    http.StatusCreated,
 		Message: "Discount created",
 		Data:    discountDTO,
+		Links: map[string]string{
+			"self": "http://" + c.Request().Host + c.Request().RequestURI + "/",
+			"get":  "http://" + c.Request().Host + c.Request().RequestURI + "/" + result.ID().String(),
+		},
 	})
 }
 

@@ -3,9 +3,10 @@ package commonapi
 import "net/http"
 
 type CommonResponse struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-	Data    any    `json:"data"`
+	Code    int               `json:"code"`
+	Message string            `json:"message"`
+	Data    any               `json:"data"`
+	Links   map[string]string `json:"_links"`
 }
 
 type CommonErrorResponse struct {
