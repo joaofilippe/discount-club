@@ -34,3 +34,7 @@ const InsertDiscount = `
 const SelectDiscountByID = `
 	SELECT * FROM discounts WHERE id = $1;
 `
+
+const SelectDiscountByCode = `
+	SELECT * FROM discounts WHERE code = $1;
+`

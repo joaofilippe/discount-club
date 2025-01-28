@@ -8,4 +8,5 @@ import (
 type Discount interface {
 	Save(discount *entities.Discount) error
 	GetByID(id uuid.UUID) (*entities.Discount, error)
+	GetByCode(code string) (*entities.Discount, error)
 }

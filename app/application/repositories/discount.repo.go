@@ -47,3 +47,15 @@ func (dr *DiscountRepo) GetByID(id uuid.UUID) (*entities.Discount, error) {
 
 	return discount, nil
 }
+
+func (dr *DiscountRepo) GetByCode(code string) (*entities.Discount, error) {
+	discountDB := new(dbmodels.Discount)
+	err := dr.conn.Get().Get(discountDB, queries.SelectDiscountByCode, code)
+	if err != nil {
+		return nil, err
+	}
+
+	discount := discountDB.ToEntity()
+
+	return discount, nil
+}
