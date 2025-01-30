@@ -10,10 +10,14 @@ type VerifyUsecase struct {
 	discountRep irepositories.Discount
 }
 
-func NewVerifyUsecase(discountRep irepositories.Discount) *VerifyUsecase {
+func NewVerifyUsecase(discountRep irepositories.Discount) (*VerifyUsecase, error) {
+	if discountRep == nil {
+		return nil, discounterrors.ErrNilDiscountRepo
+	}
+
 	return &VerifyUsecase{
 		discountRep: discountRep,
-	}
+	}, nil
 }
 
 func (vu *VerifyUsecase) Execute(code string) (bool, error) {

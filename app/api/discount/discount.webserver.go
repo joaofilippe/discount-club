@@ -80,3 +80,24 @@ func (ws *WebServer) GetDiscountByID(c echo.Context) error {
 		Data:    discountDTO,
 	})
 }
+
+func (ws *WebServer) Verify(c echo.Context) error {
+	code := c.Param("code")
+
+	isValid, err := ws.discountService.Verify(code)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, commonapi.CommonResponse{
+			Code:    http.StatusInternalServerError,
+			Message: err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, commonapi.CommonResponse{
+		Code:    http.StatusOK,
+		Message: "Discount code is valid",
+		Data: map[string]bool{
+			"isValid": isValid,
+		},
+	})
+
+}
