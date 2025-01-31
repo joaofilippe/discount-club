@@ -1,6 +1,8 @@
 package repositories
 
 import (
+	"database/sql"
+
 	"github.com/google/uuid"
 	dbmodels "github.com/joaofilippe/discount-club/app/application/repositories/models"
 	"github.com/joaofilippe/discount-club/app/application/repositories/queries"
@@ -51,7 +53,7 @@ func (dr *DiscountRepo) GetByID(id uuid.UUID) (*entities.Discount, error) {
 func (dr *DiscountRepo) GetByCode(code string) (*entities.Discount, error) {
 	discountDB := new(dbmodels.Discount)
 	err := dr.conn.Get().Get(discountDB, queries.SelectDiscountByCode, code)
-	if err != nil {
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
