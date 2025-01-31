@@ -1,17 +1,24 @@
 package userusecases
 
-import "github.com/joaofilippe/discount-club/app/domain/irepositories"
+import (
+	usererrors "github.com/joaofilippe/discount-club/app/common/myerrors/user"
+	"github.com/joaofilippe/discount-club/app/domain/irepositories"
+)
 
 type CreateUserUseCase struct {
 	userRepo irepositories.User
 }
 
-func NewCreateUserUseCase(userRepo irepositories.User) *CreateUserUseCase {
+func NewCreateUserUseCase(userRepo irepositories.User) (*CreateUserUseCase, error) {
 	if userRepo == nil {
-		panic("userRepo is required")
+		return &CreateUserUseCase{}, usererrors.ErrNilUserRepo
 	}
 
 	return &CreateUserUseCase{
 		userRepo: userRepo,
-	}
+	}, nil
+}
+
+func (uc *CreateUserUseCase) Execute() error {
+	return nil
 }
