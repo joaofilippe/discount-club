@@ -6,6 +6,7 @@ type DiscountDTO struct {
 	ID           string `json:"id"`
 	RestaurantID string `json:"restaurant_id"`
 	UserID       string `json:"user_id"`
+	Code         string `json:"code"`
 	Percentage   int    `json:"percentage"`
 	StartDate    string `json:"start_date"`
 	EndDate      string `json:"end_date"`
@@ -22,6 +23,7 @@ func NewDiscountDTOFromEntity(entity entities.Discount) DiscountDTO {
 		ID:           entity.ID().String(),
 		RestaurantID: entity.RestaurantID().String(),
 		UserID:       entity.UserID().String(),
+		Code:         entity.Code(),
 		Percentage:   entity.Percentage(),
 		StartDate:    entity.StartDate().Format("2006-01-02"),
 		EndDate:      entity.EndDate().Format("2006-01-02"),
