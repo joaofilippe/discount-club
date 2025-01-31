@@ -70,7 +70,7 @@ func (ws *WebServer) GetDiscountByID(c echo.Context) error {
 	discount, err := ws.discountService.GetByID(id)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, commonapi.CommonErrorResponse{
-			Code:    http.StatusInternalServerError,
+			Code:         http.StatusInternalServerError,
 			ErrorMessage: err.Error(),
 		})
 	}
@@ -90,14 +90,19 @@ func (ws *WebServer) Verify(c echo.Context) error {
 	isValid, err := ws.discountService.Verify(code)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, commonapi.CommonErrorResponse{
-			Code:    http.StatusInternalServerError,
+			Code:         http.StatusInternalServerError,
 			ErrorMessage: err.Error(),
 		})
 	}
 
+	message := "Discount code is not valid"
+	if isValid {
+		message = "Discount code is valid"
+	}
+
 	return c.JSON(http.StatusOK, commonapi.CommonResponse{
 		Code:    http.StatusOK,
-		Message: "Discount code is valid",
+		Message: message,
 		Data: map[string]bool{
 			"isValid": isValid,
 		},
