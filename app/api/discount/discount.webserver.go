@@ -69,7 +69,10 @@ func (ws *WebServer) GetDiscountByID(c echo.Context) error {
 
 	discount, err := ws.discountService.GetByID(id)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
+		return c.JSON(http.StatusInternalServerError, commonapi.CommonErrorResponse{
+			Code:    http.StatusInternalServerError,
+			ErrorMessage: err.Error(),
+		})
 	}
 
 	discountDTO := NewDiscountDTOFromEntity(*discount)
@@ -86,9 +89,9 @@ func (ws *WebServer) Verify(c echo.Context) error {
 
 	isValid, err := ws.discountService.Verify(code)
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, commonapi.CommonResponse{
+		return c.JSON(http.StatusInternalServerError, commonapi.CommonErrorResponse{
 			Code:    http.StatusInternalServerError,
-			Message: err.Error(),
+			ErrorMessage: err.Error(),
 		})
 	}
 
