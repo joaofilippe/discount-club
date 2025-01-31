@@ -43,7 +43,11 @@ func (uc *CreateUseCase) Execute(request *entities.Discount) (*entities.Discount
 
 	initializedDiscount := uc.prepareDiscount(request)
 
-	return initializedDiscount, uc.DiscountRepo.Save(initializedDiscount)
+	if err := uc.DiscountRepo.Save(initializedDiscount); err != nil {
+		return &entities.Discount{}, err
+	}
+
+	return initializedDiscount, nil
 }
 
 // prepareDiscount initializes a new discount with a generated code
