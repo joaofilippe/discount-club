@@ -96,5 +96,9 @@ var _ = Describe("Create.Usecase", func() {
 				Expect(discount.Code).NotTo(BeNil())
 			})
 		})
+
+		Context("with a valid code", func(){
+			
+		})
 	})
 })
