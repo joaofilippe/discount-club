@@ -1,6 +1,7 @@
 package discountusecases_test
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -11,41 +12,22 @@ import (
 	discounterrors "github.com/joaofilippe/discount-club/app/common/myerrors/discount"
 	"github.com/joaofilippe/discount-club/app/domain/entities"
 	discountusecases "github.com/joaofilippe/discount-club/app/domain/usecases/discount"
+	"github.com/joaofilippe/discount-club/mocks"
 )
-
-type DiscountRepoMock struct {
-	mock.Mock
-}
-
-func (d *DiscountRepoMock) Save(discount *entities.Discount) error {
-	if discount == nil {
-		return discounterrors.ErrNilDiscountRepo
-	}
-
-	return nil
-}
-
-func (d *DiscountRepoMock) GetByID(id uuid.UUID) (*entities.Discount, error) {
-	return nil, nil
-}
-
-func (d *DiscountRepoMock) GetByCode(code string) (*entities.Discount, error) {
-	return nil, nil
-}
 
 var _ = Describe("Create.Usecase", func() {
 	var (
-		discountRepo    *DiscountRepoMock
-		discountUseCase *discountusecases.CreateUseCase
-		discount        *entities.Discount
-		err             error
+		discountRepoMock *mocks.Discount
+		discountUseCase  *discountusecases.CreateUseCase
+		request          *entities.Discount
+		err              error
 	)
 
 	Describe("NewCreateUseCase", func() {
 		Context("whith a valid discount repository", func() {
 			BeforeEach(func() {
-				discountRepo = &DiscountRepoMock{}
-				discountUseCase, err = discountusecases.NewCreateUseCase(discountRepo)
+				discountRepoMock = &mocks.Discount{}
+				discountUseCase, err = discountusecases.NewCreateUseCase(discountRepoMock)
 			})
 
 			It("should return a valid use case", func() {
@@ -68,12 +50,13 @@ var _ = Describe("Create.Usecase", func() {
 
 	Describe("Execute", func() {
 		BeforeEach(func() {
-			discountRepo = &DiscountRepoMock{}
-			discountUseCase, _ = discountusecases.NewCreateUseCase(discountRepo)
+			discountRepoMock = &mocks.Discount{}
+
+			discountUseCase, _ = discountusecases.NewCreateUseCase(discountRepoMock)
 
 			startTime, _ := time.Parse("2006-01-02", "2021-01-31")
 			endTime := startTime.Add(time.Hour * 24 * 31)
-			discount, _ = entities.NewDiscount(
+			request, _ = entities.NewDiscount(
 				uuid.New(),
 				uuid.New(),
 				10,
@@ -82,18 +65,36 @@ var _ = Describe("Create.Usecase", func() {
 				1,
 				"test discount",
 			)
+
+			discountRepoMock.On("Save", mock.Anything).Return(nil)
 		})
 
 		Context("whith a valid discount", func() {
-			BeforeEach(func() {
-				discountRepo.On("Save", discount).Return(nil)
-				discount, err = discountUseCase.Execute(discount)
+			BeforeEach(func(){
+
 			})
 
 			It("should return no error", func() {
+				request, err = discountUseCase.Execute(request)
+				if err != nil {
+					fmt.Println(err)
+				}
+
 				Expect(err).To(BeNil())
-				Expect(discount).NotTo(BeNil())
-				Expect(discount.Code).NotTo(BeNil())
+				Expect(request).NotTo(BeNil())
+				Expect(request.Code).NotTo(BeNil())
+			})
+		})
+
+		Context("with a nil request", func() {
+			BeforeEach(func() {
+				request = nil
+			})
+
+			_, err := discountUseCase.Execute(request)
+			It("should return ErrNoDiscountProvided", func() {
+				Expect(err).NotTo(BeNil())
+				Expect(err).To(Equal(discounterrors.ErrNoDiscountProvided))
 			})
 		})
 	})
