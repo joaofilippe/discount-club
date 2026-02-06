@@ -1,6 +1,10 @@
 package commonapi
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/labstack/echo/v4"
+)
 
 type CommonResponse struct {
 	Code    int               `json:"code"`
@@ -21,4 +25,8 @@ func CommonInvalidResquest(err error) CommonErrorResponse {
 		ErrorMessage: "Invalid request",
 		ErrorDetails: err.Error(),
 	}
+}
+
+func GetBaseURL(c echo.Context) string {
+	return "http://" + c.Request().Host + c.Request().RequestURI
 }

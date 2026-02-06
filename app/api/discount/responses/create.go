@@ -12,13 +12,15 @@ import (
 func BuildCreateResponse(c echo.Context, discount *entities.Discount) commonapi.CommonResponse {
 	discountDTO := NewDiscountDTOFromEntity(*discount)
 
+	baseURL := commonapi.GetBaseURL(c)
+
 	return commonapi.CommonResponse{
 		Code:    http.StatusCreated,
 		Message: "Discount created",
 		Data:    discountDTO,
 		Links: map[string]string{
-			"self": "http://" + c.Request().Host + c.Request().RequestURI + "/",
-			"get":  "http://" + c.Request().Host + c.Request().RequestURI + "/" + discount.ID().String(),
+			"self": baseURL + "/",
+			"get":  baseURL + "/" + discount.ID().String(),
 		},
 	}
 }
