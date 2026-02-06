@@ -5,6 +5,7 @@ import (
 
 	commonapi "github.com/joaofilippe/discount-club/app/api/common"
 	"github.com/joaofilippe/discount-club/app/api/discount/requests"
+	"github.com/joaofilippe/discount-club/app/api/discount/responses"
 	"github.com/joaofilippe/discount-club/app/domain/entities"
 	"github.com/joaofilippe/discount-club/app/domain/iservices"
 	"github.com/labstack/echo/v4"
@@ -51,17 +52,7 @@ func (ws *WebServer) CreateDiscount(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	discountDTO := NewDiscountDTOFromEntity(*result)
-
-	return c.JSON(http.StatusCreated, commonapi.CommonResponse{
-		Code:    http.StatusCreated,
-		Message: "Discount created",
-		Data:    discountDTO,
-		Links: map[string]string{
-			"self": "http://" + c.Request().Host + c.Request().RequestURI + "/",
-			"get":  "http://" + c.Request().Host + c.Request().RequestURI + "/" + result.ID().String(),
-		},
-	})
+	return c.JSON(http.StatusCreated, responses.BuildCreateResponse(c, result))
 }
 
 func (ws *WebServer) GetDiscountByID(c echo.Context) error {
@@ -75,7 +66,7 @@ func (ws *WebServer) GetDiscountByID(c echo.Context) error {
 		})
 	}
 
-	discountDTO := NewDiscountDTOFromEntity(*discount)
+	discountDTO := responses.NewDiscountDTOFromEntity(*discount)
 
 	return c.JSON(http.StatusOK, commonapi.CommonResponse{
 		Code:    http.StatusOK,

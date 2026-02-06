@@ -69,6 +69,7 @@ func newInstance(logger *logger.Logger) *App {
 func setDsn() {
 	if os.Getenv("ENV") == "docker" {
 		app.Dsn = os.Getenv("COMPOSE_DSN")
+		return
 	}
 
 	app.Dsn = setDsnFromYaml()
