@@ -46,3 +46,7 @@ func FromInt(value int) (UserType, bool) {
 		return -1, false
 	}
 }
+
+func (ut UserType) DBString() string {
+	return [...]string{"client", "restaurant_admin", "restaurant_worker", "admin"}[ut]
+}

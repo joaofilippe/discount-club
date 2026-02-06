@@ -34,10 +34,12 @@ func main() {
 
 	dbConn.RunMigrations()
 
-	discountService, _ := 
+	discountService, _ :=
 		services.NewDiscountService(repositories.NewDiscountRepo(dbConn))
-	
-		application := application.New(discountService)
+
+	userService := services.NewUserService(repositories.NewUserRepo(dbConn))
+
+	application := application.New(discountService, userService)
 
 	server := webserver.New(application)
 

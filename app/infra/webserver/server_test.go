@@ -23,6 +23,10 @@ func (a *IApplicationMock) DiscountService() iservices.IDiscount {
 	return nil
 }
 
+func (a *IApplicationMock) UserService() iservices.IUser {
+	return nil
+}
+
 func (s *ServerTestSuite) SetupTest() {
 	applicationMock := &IApplicationMock{}
 	s.server = webserver.New(applicationMock)

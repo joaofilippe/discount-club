@@ -1,10 +1,10 @@
 package api
 
 import (
-	"github.com/labstack/echo/v4"
+	discountwebserver "github.com/joaofilippe/discount-club/app/api/discount"
+	userwebserver "github.com/joaofilippe/discount-club/app/api/user"
 	"github.com/joaofilippe/discount-club/app/application"
-	"github.com/joaofilippe/discount-club/app/api/discount"
-	
+	"github.com/labstack/echo/v4"
 )
 
 type Api struct {
@@ -24,4 +24,7 @@ func (a *Api) BuildRoutes() {
 
 	d := discountwebserver.New(a.application.DiscountService(), apiV1)
 	d.BuildRoutes()
+
+	u := userwebserver.New(a.application.UserService(), apiV1)
+	u.ConfigureRoutes()
 }
