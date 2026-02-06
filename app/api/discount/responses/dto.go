@@ -1,4 +1,4 @@
-package discountwebserver
+package responses
 
 import "github.com/joaofilippe/discount-club/app/domain/entities"
 
