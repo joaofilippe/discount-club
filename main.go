@@ -27,15 +27,15 @@ func main() {
 
 	app := appconfig.Instance(logger)
 
-	conn := database.New(logger, app)
-	if err := conn.Get().Ping(); err != nil {
+	dbConn := database.New(logger, app)
+	if err := dbConn.Get().Ping(); err != nil {
 		logger.Fatalf(err)
 	}
 
-	conn.RunMigrations()
+	dbConn.RunMigrations()
 
 	discountService, _ := 
-		services.NewDiscountService(repositories.NewDiscountRepo(conn))
+		services.NewDiscountService(repositories.NewDiscountRepo(dbConn))
 	
 		application := application.New(discountService)
 
