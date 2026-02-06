@@ -62,3 +62,15 @@ func (u *User) Active() bool {
 func (u *User) SetID(id uuid.UUID) {
 	u.id = id
 }
+
+func (u *User) SetPassword(password string) {
+	u.password = password
+}
+
+func (u *User) Hydrate(id uuid.UUID, createdAt, updatedAt time.Time, deletedAt time.Time, active bool) {
+	u.id = id
+	u.createdAt = createdAt
+	u.updatedAt = updatedAt
+	u.deletedAt = deletedAt
+	u.active = active
+}

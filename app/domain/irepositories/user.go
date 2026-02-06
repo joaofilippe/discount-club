@@ -6,4 +6,5 @@ import (
 
 type IUser interface {
 	Save(user *entities.User) (*entities.User, error)
+	GetByEmail(email string) (*entities.User, error)
 }

@@ -59,3 +59,25 @@ func (ws *WebServer) CreateUser(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, responses.BuildCreateResponse(c, result))
 }
+
+func (ws *WebServer) Login(c echo.Context) error {
+	request := new(requests.LoginRequest)
+	if err := c.Bind(request); err != nil {
+		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResquest(err))
+	}
+
+	validatedRequest, err := request.Parse()
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, commonapi.CommonInvalidResquest(err))
+	}
+
+	token, err := ws.userService.Login(validatedRequest.Email, validatedRequest.Password)
+	if err != nil {
+		return c.JSON(http.StatusUnauthorized, commonapi.CommonErrorResponse{
+			Code:         http.StatusUnauthorized,
+			ErrorMessage: err.Error(),
+		})
+	}
+
+	return c.JSON(http.StatusOK, responses.BuildLoginResponse(token))
+}
