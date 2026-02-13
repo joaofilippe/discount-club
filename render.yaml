@@ -1,0 +1,23 @@
+databases:
+  - name: discount-club-db
+    databaseName: discount_club
+    user: discount_user
+    plan: free # Use 'starter' or higher for production features (backups, etc)
+
+services:
+  - type: web
+    name: discount-club-app
+    env: docker
+    plan: free
+    branch: main
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: ENV
+        value: docker # Use 'docker' to trigger the env var DSN logic in config/app_config.go
+      - key: SECRET_KEY
+        generateValue: true
+      - key: COMPOSE_DSN
+        fromDatabase:
+          name: discount-club-db
+          property: connectionString
